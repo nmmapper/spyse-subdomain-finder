@@ -8,9 +8,11 @@ import simplejson as json
 class SpyseSubdomainSearch(object):
 
     def __init__(self, domain):
-        self.domain = domain
+        self.domain = self.cleanDomain(domain)
+        
         self.referer = "https://spyse.com/search/domain/{0}".format(self.domain)
-        self.host = "https://spyse.com/domain/json-subdomains?domain=nmmapper.com&page=1&per_page=20&q={0}".format(self.domain)
+        self.host = "https://spyse.com/domain/json-subdomains?domain={0}&page=1&per_page=20&q={1}".format(self.domain, self.domain)
+        #https://spyse.com/domain/json-subdomains?domain=nmmapper.com&page=1&per_page=20&q=nmmapper.com
         self.host_header = "spyse.com"
         
         self.ua = useragents.UserAgents()
@@ -50,6 +52,12 @@ class SpyseSubdomainSearch(object):
         self.do_search()
         return self.get_hostnames()
     
+    def cleanDomain(self, domain):
+        """
+        Remove https:// www
+        """
+        return domain.replace("https://", "", len(domain)).replace("http://", "", len(domain)).replace("www", "", len(domain))
+        
     def get_people(self):
         return []
     
