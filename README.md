@@ -32,7 +32,7 @@ This tool is still in development. If you want a mature [subdomain finder](https
 * [8 Subdomain finder tools online](https://www.nmmapper.com/sys/tools/subdomainfinder/)
 
 ## Cross-Sellin
-*[Ethical-tools](https://ethicaltools.gitbook.io/subdomainfinder/)
-*[python3-nmap](https://nmap.readthedocs.io/en/latest/)
-*[Dnsdumpster](https://dnsdumpster.readthedocs.io/)
+* [Ethical-tools](https://ethicaltools.gitbook.io/subdomainfinder/)
+* [python3-nmap](https://nmap.readthedocs.io/en/latest/)
+* [Dnsdumpster](https://dnsdumpster.readthedocs.io/)
 
