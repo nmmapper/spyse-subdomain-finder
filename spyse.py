@@ -4,6 +4,7 @@ import re
 import spyseparser 
 import argparse
 import simplejson as json 
+import socket 
 
 class SpyseSubdomainSearch(object):
 
@@ -12,7 +13,6 @@ class SpyseSubdomainSearch(object):
         
         self.referer = "https://spyse.com/search/domain/{0}".format(self.domain)
         self.host = "https://spyse.com/domain/json-subdomains?domain={0}&page=1&per_page=20&q={1}".format(self.domain, self.domain)
-        #https://spyse.com/domain/json-subdomains?domain=nmmapper.com&page=1&per_page=20&q=nmmapper.com
         self.host_header = "spyse.com"
         
         self.ua = useragents.UserAgents()
@@ -44,7 +44,13 @@ class SpyseSubdomainSearch(object):
         rawres = spyseparser.SpyseParser(self.results, self)
         rawres.run_parser()
         
-        self.subdomains = rawres.hostnames
+        subdomain_parsed = rawres.hostnames
+        
+        for sub in subdomain_parsed:
+            self.subdomains.append({
+                "subdomain":sub,
+                "ip":self.resolve_ip(sub)
+            })
         return self.subdomains 
         
     def process(self):
@@ -57,7 +63,16 @@ class SpyseSubdomainSearch(object):
         Remove https:// www
         """
         return domain.replace("https://", "", len(domain)).replace("http://", "", len(domain)).replace("www", "", len(domain))
-        
+    
+    def resolve_ip(self, host):
+        """
+        @ given the host return the IP
+        """
+        try:
+            return socket.gethostbyname(host)
+        except socket.gaierror:
+            return "404"
+            
     def get_people(self):
         return []
     
