@@ -5,6 +5,7 @@ import spyseparser
 import argparse
 import simplejson as json 
 import socket 
+import utils 
 
 class SpyseSubdomainSearch(object):
 
@@ -49,7 +50,8 @@ class SpyseSubdomainSearch(object):
         for sub in subdomain_parsed:
             self.subdomains.append({
                 "subdomain":sub,
-                "ip":self.resolve_ip(sub)
+                "ip":self.resolve_ip(sub),
+                "server":utils.get_server_type(sub)
             })
         return self.subdomains 
         
